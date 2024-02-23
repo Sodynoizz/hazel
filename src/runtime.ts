@@ -5,6 +5,11 @@ import { ReportExcelSnippet } from 'snippets/reportExcel'
 import { StudentInfoSnippet } from 'snippets/studentinfo'
 import { ReportLogsSnippet } from 'snippets/reportLogs' 
 
+enum RunTime {
+  DEV = "DEV",
+  PROD = "PROD"
+}
+
 enum SnippetMode {
   REPORTEXCEL = 1,
   STUDENTINFO = 2,
@@ -14,23 +19,25 @@ enum SnippetMode {
 }
 
 const mode: SnippetMode = SnippetMode.STUDENTINFO;
+const runtime: Runtime = new Runtime(RunTime.PROD);
 
 switch (mode) {
   case SnippetMode.REPORTEXCEL as number:
-    new Runtime('PROD').runSnippet(ReportExcelSnippet);
+    runtime.runSnippet(ReportExcelSnippet);
     break;
   case SnippetMode.STUDENTINFO as number:
-    new Runtime('PROD').runSnippet(StudentInfoSnippet);
+    runtime.runSnippet(StudentInfoSnippet);
     break;
   case SnippetMode.CLUBSLISTS as number:
-    new Runtime('PROD').runSnippet(ClubsListsSnippet);
+    runtime.runSnippet(ClubsListsSnippet);
     break;
   case SnippetMode.REPORTPDF as number:
-    new Runtime('PROD').runSnippet(ReportPDFSnippet);
+    runtime.runSnippet(ReportPDFSnippet);
     break;
   case SnippetMode.REPORTLOGS as number:
-    new Runtime('PROD').runSnippet(ReportLogsSnippet);
+    runtime.runSnippet(ReportLogsSnippet);
     break;
   default:
     console.log('Invalid mode');
+    break;
 }
