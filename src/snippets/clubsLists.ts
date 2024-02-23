@@ -41,7 +41,7 @@ async function generateExcelFile(data: Data[]): Promise<void> {
   await workbook.xlsx.writeFile(exportPath);
 }
 
-export const ClubSnippet = async (debug: Debugger) => {
+export const ClubsListsSnippet = async (debug: Debugger) => {
   try {
     const clubData = await fetchClubData();
 

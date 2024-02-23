@@ -159,7 +159,7 @@ export class EvaluationDocument {
     failed = this.fillBlank(failed)
     exc = this.fillBlank(exc)
 
-    const slicedExc = this.sliceToPrintableChunk(exc, 6)
+    const slicedExc = this.sliceToPrintableChunk(exc, 10)
     let excd: any[][]
     if (slicedExc.length > 1) {
       excd = slicedExc.slice(0, slicedExc.length - 1)

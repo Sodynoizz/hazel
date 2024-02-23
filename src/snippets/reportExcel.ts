@@ -16,7 +16,12 @@ let clubscnt = 0;
 let studentscnt = 0;
 
 async function fetchDataFromFirestore() {
-  const evalCol = new FirestoreCollection<EvaluateCollectionType>("evaluate");
+  const evalCol = new FirestoreCollection<EvaluateCollectionType>(
+    "evaluate"
+  ).setDefaultMutator(
+    Mutators.SpecificKeyFieldKVMutator((doc) => doc.get("student_id"))
+  );
+
   const users = new FirestoreCollection<UserDataCollectionType>(
     "data"
   ).setDefaultMutator(
@@ -38,6 +43,7 @@ function getStudentInfo(
   const student = userData.findValues(
     (userDataItem) => userDataItem.get("student_id") === key
   );
+  
 
   return {
     title: student[0]?.get("title"),
@@ -67,7 +73,7 @@ function createSheetData(
   });
 }
 
-export const StatsSnippet = async (debug: Debugger) => {
+export const ReportExcelSnippet = async (debug: Debugger) => {
   const { evalData, userData } = await fetchDataFromFirestore();
 
   if (!evalData || !userData) {

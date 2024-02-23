@@ -1,26 +1,36 @@
 import { Runtime } from '@lib'
-import { StatsSnippet } from 'snippets/studentstats'
-import { ClubSnippet } from 'snippets/clubsstats'
-import { StudentInfoSnippet } from 'snippets/studentstatus'
+import { ClubsListsSnippet } from 'snippets/clubsLists'
+import { ReportPDFSnippet } from 'snippets/reportPDF'
+import { ReportExcelSnippet } from 'snippets/reportExcel'
+import { StudentInfoSnippet } from 'snippets/studentinfo'
+import { ReportLogsSnippet } from 'snippets/reportLogs' 
 
 enum SnippetMode {
-  Stats = 1,
-  StudentInfo = 2,
-  Club = 3
+  REPORTEXCEL = 1,
+  STUDENTINFO = 2,
+  CLUBSLISTS = 3,
+  REPORTPDF = 4,
+  REPORTLOGS = 5
 }
 
-const mode: SnippetMode = SnippetMode.StudentInfo;
+const mode: SnippetMode = SnippetMode.STUDENTINFO;
 
 switch (mode) {
-  case SnippetMode.Stats as number:
-    new Runtime('PROD').runSnippet(StatsSnippet)
-    break
-  case SnippetMode.StudentInfo as number:
-    new Runtime('PROD').runSnippet(StudentInfoSnippet)
+  case SnippetMode.REPORTEXCEL as number:
+    new Runtime('PROD').runSnippet(ReportExcelSnippet);
     break;
-  case SnippetMode.Club as number:
-    new Runtime('PROD').runSnippet(ClubSnippet)
-    break
+  case SnippetMode.STUDENTINFO as number:
+    new Runtime('PROD').runSnippet(StudentInfoSnippet);
+    break;
+  case SnippetMode.CLUBSLISTS as number:
+    new Runtime('PROD').runSnippet(ClubsListsSnippet);
+    break;
+  case SnippetMode.REPORTPDF as number:
+    new Runtime('PROD').runSnippet(ReportPDFSnippet);
+    break;
+  case SnippetMode.REPORTLOGS as number:
+    new Runtime('PROD').runSnippet(ReportLogsSnippet);
+    break;
   default:
-    console.log('Invalid mode')
+    console.log('Invalid mode');
 }
