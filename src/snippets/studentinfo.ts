@@ -62,7 +62,6 @@ function getStudentInfo(
     }
   });
 
-  // TODO: Categorize information
   return {
     cardID: _student?.get("cardID"),
     studentID: _student?.get("student_id"),
@@ -89,5 +88,5 @@ export const StudentInfoSnippet = async (debug: Debugger) => {
   
   const evalRecords = new ClubRecord(evalData.getRecord());
   const studentInfo = getStudentInfo(userData, evalRecords, query);
-  console.table(studentInfo);
+  debug.table(studentInfo);
 };
