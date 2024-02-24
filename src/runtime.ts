@@ -2,7 +2,7 @@ import { Runtime } from '@lib'
 import { ClubsListsSnippet } from 'snippets/clubsLists'
 import { ReportPDFSnippet } from 'snippets/reportPDF'
 import { ReportExcelSnippet } from 'snippets/reportExcel'
-import { StudentInfoSnippet } from 'snippets/studentinfo'
+import { StudentInfoSnippet } from 'snippets/studentInfo'
 import { ReportLogsSnippet } from 'snippets/reportLogs' 
 
 enum RunTime {

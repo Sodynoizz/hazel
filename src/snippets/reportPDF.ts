@@ -9,7 +9,8 @@ import {
   DocumentTemplate,
   EvaluationDocument,
   FirestoreCollection,
-  Mutators
+  Mutators,
+  IDUtil
 } from '@lib'
 
 export const ReportPDFSnippet = async (debug: Debugger) => {
@@ -28,9 +29,10 @@ export const ReportPDFSnippet = async (debug: Debugger) => {
 
   const eMap = new ClubRecord(eData.getRecord()).transformToMainClubs()
   const template = new DocumentTemplate('assets/eTemplate.html')
+  let fileCounts = 0
 
   await eMap.iterate(async (key, value) => {
-    debug.info(`working on ${key}`)
+    debug.info(`working on ${IDUtil.applyOverriddenLayer(key)}`)
 
     const clubEMap = new DMap(value)
 
@@ -48,7 +50,9 @@ export const ReportPDFSnippet = async (debug: Debugger) => {
       },
       uData
     )
-
-    await doc.generate(template, `${key}`)
+    await doc.generate(template, IDUtil.applyOverriddenLayer(key))
+    fileCounts++
   })
+
+  debug.info(`Total Files: ${fileCounts}`)
 }

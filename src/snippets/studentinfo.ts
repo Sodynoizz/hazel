@@ -11,6 +11,7 @@ import type {
 // config query
 const query = "วรนน จุธากรณ์";
 
+
 async function fetchDataFromFirestore() {
   const evalCol = new FirestoreCollection<EvaluateCollectionType>(
     "evaluate"
@@ -73,7 +74,7 @@ function getStudentInfo(
     number: _student?.get("number"),
     club: _student?.get("club"),
     clubname: clubName,
-    audition: _student?.get("audition"),
+    // audition: `${_student?.get("audition")}`,
     position: _student?.get("position"),
     old_club: _student?.get("old_club"),
     old_clubname: oldclubName,
@@ -88,6 +89,5 @@ export const StudentInfoSnippet = async (debug: Debugger) => {
   
   const evalRecords = new ClubRecord(evalData.getRecord());
   const studentInfo = getStudentInfo(userData, evalRecords, query);
-
-  console.log(studentInfo);
+  console.table(studentInfo);
 };
