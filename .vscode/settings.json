@@ -2,7 +2,6 @@
     "iis.configDir": "",
     "spellright.language": [],
     "spellright.documentTypes": [
-        "markdown",
         "latex",
         "plaintext"
     ],
