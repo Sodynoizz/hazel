@@ -8,10 +8,6 @@ import type {
   EvaluateType
 } from "@lib";
 
-// config query
-const query = "วรนน จุธากรณ์";
-
-
 async function fetchDataFromFirestore() {
   const evalCol = new FirestoreCollection<EvaluateCollectionType>(
     "evaluate"
@@ -86,7 +82,9 @@ export const StudentInfoSnippet = async (debug: Debugger) => {
   const {evalData, userData} = await fetchDataFromFirestore();
   if (!userData || !evalData) return;
   
+  const query = debug.pauseForQuestion("Input name");
+  console.log(query);
   const evalRecords = new ClubRecord(evalData.getRecord());
-  const studentInfo = getStudentInfo(userData, evalRecords, query);
+  const studentInfo = getStudentInfo(userData, evalRecords ,query);
   debug.table(studentInfo);
 };
