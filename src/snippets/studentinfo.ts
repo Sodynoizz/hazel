@@ -73,7 +73,7 @@ function getStudentInfo(
     position: _student?.get("position"),
     old_club: _student?.get("old_club"),
     old_clubname: oldclubName,
-    evaluationResult: eval_result
+    evaluation_result: eval_result
   };
 }
 
@@ -83,7 +83,7 @@ export const StudentInfoSnippet = async (debug: Debugger) => {
   if (!userData || !evalData) return;
   
   const query = debug.pauseForQuestion("Input name");
-  console.log(query);
+  debug.info(`Student Info ${query}`);
   const evalRecords = new ClubRecord(evalData.getRecord());
   const studentInfo = getStudentInfo(userData, evalRecords ,query);
   debug.table(studentInfo);
