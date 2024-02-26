@@ -31,7 +31,7 @@ async function fetchDataFromFirestore() {
 
 function getStudentInfo(
   userData: DMap<string, ReferableMapEntity<IUserData>>,
-  evalRecords: DMap<string,  ReferableMapEntity<EvaluateType>>,
+  evalRecords: DMap<string, ReferableMapEntity<EvaluateType>>,
   key: string
 ) {
   const student = userData.findValues(
@@ -39,13 +39,13 @@ function getStudentInfo(
       `${userDataItem.get("firstname")} ${userDataItem.get("lastname")}` === key
   );
 
-  
+
   const _student = student[0];
   const oldclub = _student?.get("old_club");
   const club = _student?.get("club");
-  
+
   let clubName, oldclubName, eval_result;
-  if (oldclub !== undefined) oldclubName = IDUtil.translateToClubName(oldclub);  
+  if (oldclub !== undefined) oldclubName = IDUtil.translateToClubName(oldclub);
   if (club !== undefined) clubName = IDUtil.translateToClubName(club);
 
   evalRecords.map((key, val) => {
@@ -77,14 +77,47 @@ function getStudentInfo(
   };
 }
 
+function getStudentMatchName(
+  userData: DMap<string, ReferableMapEntity<IUserData>>,
+  key: string
+): string[][] {
+  const student = userData.findValues(
+    (userDataItem) =>
+      `${userDataItem.get("firstname")}` === key
+  );
+
+  let matched_students : string[][] = []
+
+  for (let i = 0; i < student.length; i++) {
+    matched_students.push([`${student[i]?.get("student_id")}`, `${student[i]?.get("firstname")} ${student[i]?.get("lastname")}`]);
+  };
+
+  return matched_students;
+}
 
 export const StudentInfoSnippet = async (debug: Debugger) => {
-  const {evalData, userData} = await fetchDataFromFirestore();
+  const { evalData, userData } = await fetchDataFromFirestore();
   if (!userData || !evalData) return;
-  
-  const query = debug.pauseForQuestion("Input name");
-  debug.info(`Student Info ${query}`);
-  const evalRecords = new ClubRecord(evalData.getRecord());
-  const studentInfo = getStudentInfo(userData, evalRecords ,query);
+
+  let query: string = debug.pauseForQuestion("Input name")
+
+  // Support for smart searching
+  if (!query.includes(" ")) {
+    const matchingData = getStudentMatchName(userData, query)
+    debug.table(matchingData)
+
+    let response = debug.pauseForQuestion(`Select Index (0-${matchingData.length - 1})`)
+    if (parseInt(response) <= matchingData.length - 1) {
+      const searchFor = matchingData[parseInt(response)] || "test";
+      query = searchFor[1] || "";
+    } else {
+      debug.err("Your index is out of range.")
+      return;
+    }
+  }
+
+  debug.info(`Student Info ${query}`)
+  const evalRecords = new ClubRecord(evalData.getRecord())
+  const studentInfo = getStudentInfo(userData, evalRecords, query)
   debug.table(studentInfo);
 };
