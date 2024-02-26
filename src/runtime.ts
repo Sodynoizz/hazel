@@ -5,7 +5,7 @@ import { ReportExcelSnippet } from 'snippets/reportExcel'
 import { StudentInfoSnippet } from 'snippets/studentInfo'
 import { ReportLogsSnippet } from 'snippets/reportLogs' 
 
-enum RunTime {
+enum RunOption {
   DEV = "DEV",
   PROD = "PROD"
 }
@@ -19,7 +19,7 @@ enum SnippetMode {
 }
 
 const mode: SnippetMode = SnippetMode.STUDENTINFO;
-const runtime: Runtime = new Runtime(RunTime.PROD);
+const runtime: Runtime = new Runtime(RunOption.PROD);
 
 switch (mode) {
   case SnippetMode.REPORTEXCEL as number:
