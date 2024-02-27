@@ -18,6 +18,7 @@ enum SnippetMode {
   REPORTLOGS = 5
 }
 
+// TODO: Support for SnippetMode via terminal
 const mode: SnippetMode = SnippetMode.STUDENTINFO;
 const runtime: Runtime = new Runtime(RunOption.PROD);
 
