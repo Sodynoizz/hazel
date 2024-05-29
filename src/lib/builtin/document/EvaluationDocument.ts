@@ -48,7 +48,7 @@ export class EvaluationDocument {
       clubId: IDUtil.applyOverriddenLayer(this.clubID),
       sem: this.docInfo.semester,
       year: this.docInfo.year,
-      count: this.clubMemberData.all.size(),
+      count: this.clubMemberData.all.size() - 1, // TODO: Debug
       pass: (this.clubMemberData.passed?.length || 0).toString(),
       failed: (this.clubMemberData.failed?.length || 0).toString(),
       exc: (
